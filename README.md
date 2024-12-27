@@ -36,6 +36,23 @@ On vérifie que la salle peut accueillir la promotion choisit. C'est à dire que
 
 ### E. Durée de la matière
 
-On vérifie que la durée de la matière corréspond bien au créneau choisit.
+On vérifie que la durée de la matière corréspond bien au créneau choisi.
+
+### F. Horaire ouverture de l'université
+
+L'université ouvre ses portes à 08h00 et les ferme à 20h00, donc de même pour les salles. On va donc vérifier que le créneau choisi ne commence pas avant 08h00 et ne fini pas après 20h00.
+
+### G. Envoie du formulaire
+
+Si toutes les conditions sont remplis, on ajoute alors une nouvelle réservations.
+
+## 3. Affichage et front
+
+### A. Bootstrap
+Pour la partie front nous avons choisi d'utiliser bootstrap
+
+### B. Affichage des réservations
+Nous avons donc décidé d'afficher les réservations en détail, c'est a dire la date, l'heure de début, l'heure de fin, le nom et prénom de l'enseignant, le niveau de la promotion et l'intitulé de la formation, le nom de la matière et le nom de la salle.
+
 
 
