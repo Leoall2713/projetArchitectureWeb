@@ -19,7 +19,6 @@ final class ReservationsController extends AbstractController
     {
         return $this->render('reservations/index.html.twig', [
             'reservations' => $reservationsRepository->findAll(),
-            $reservation = $reservationsRepository->findAll(),
         ]);
     }
 
@@ -54,7 +53,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Res
             return $this->redirectToRoute('app_reservations_new');
         }
 
-        // On vérifie que la réservation est inferieur à 1h
+        // On vérifie que la réservation est supérieur à 1h
         if ($minutes < 60) {
             $this->addFlash('error', 'La réservation doit être pour une durée d\'au moins 1 heure.');
             return $this->redirectToRoute('app_reservations_new');
