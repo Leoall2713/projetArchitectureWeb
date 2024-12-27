@@ -24,7 +24,9 @@ final class ReservationsController extends AbstractController
         $form = $this->createFormBuilder()
             ->add('promotion', EntityType::class, [
                 'class' => Promotions::class,
-                'choice_label' => 'intituleFormation',
+                'choice_label' => function (Promotions $promotion) {
+                    return $promotion->getNiveauPromotion() . ' ' . $promotion->getIntituleFormation();
+                },
                 'placeholder' => 'Toutes les promotions',
                 'required' => false,
             ])
