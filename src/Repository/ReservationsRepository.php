@@ -40,4 +40,28 @@ class ReservationsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    /**
+     * Filtre les réservations en fonction de la promotion et de la salle.
+     *
+     * @param Promotions|null $promotion
+     * @param Salles|null $salle
+     * @return Reservations[]
+     */
+    public function findByFilters($promotion = null, $salle = null)
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        if ($promotion) {
+            $qb->andWhere('r.promotion = :promotion')
+               ->setParameter('promotion', $promotion);
+        }
+
+        if ($salle) {
+            $qb->andWhere('r.salle = :salle')
+               ->setParameter('salle', $salle);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Reservations;
+use App\Entity\Promotions;
+use App\Entity\Salles;
 use App\Form\ReservationsType;
 use App\Repository\ReservationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,47 +12,47 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 #[Route('/reservations')]
 final class ReservationsController extends AbstractController
 {
     #[Route(name: 'app_reservations_index', methods: ['GET', 'POST'])]
-public function index(Request $request, ReservationsRepository $reservationsRepository): Response
-{
-    // Créer un formulaire pour filtrer par salle et promotion
-    $form = $this->createFormBuilder()
-        ->add('promotion', EntityType::class, [
-            'class' => Promotions::class,
-            'choice_label' => 'intitule',
-            'placeholder' => 'Toutes les promotions',
-            'required' => false,
-        ])
-        ->add('salle', EntityType::class, [
-            'class' => Salles::class,
-            'choice_label' => 'nom',
-            'placeholder' => 'Toutes les salles',
-            'required' => false,
-        ])
-        ->getForm();
+    public function index(Request $request, ReservationsRepository $reservationsRepository): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('promotion', EntityType::class, [
+                'class' => Promotions::class,
+                'choice_label' => 'intituleFormation',
+                'placeholder' => 'Toutes les promotions',
+                'required' => false,
+            ])
+            ->add('salle', EntityType::class, [
+                'class' => Salles::class,
+                'choice_label' => 'nomSalle',
+                'placeholder' => 'Toutes les salles',
+                'required' => false,
+            ])
+            ->getForm();
 
-    $form->handleRequest($request);
+        $form->handleRequest($request);
 
-    $promotion = null;
-    $salle = null;
+        $promotion = null;
+        $salle = null;
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $promotion = $form->get('promotion')->getData();
-        $salle = $form->get('salle')->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $promotion = $form->get('promotion')->getData();
+            $salle = $form->get('salle')->getData();
+        }
+
+        $reservations = $reservationsRepository->findByFilters($promotion, $salle);
+
+        return $this->render('reservations/index.html.twig', [
+            'reservations' => $reservations,
+            'form' => $form->createView(),
+        ]);
     }
-
-    // Filtrer les réservations en fonction de la promotion et de la salle
-    $reservations = $reservationsRepository->findByFilters($promotion, $salle);
-
-    return $this->render('reservations/index.html.twig', [
-        'reservations' => $reservations,
-        'form' => $form->createView(),
-    ]);
-}
 
     #[Route('/new', name: 'app_reservations_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager, ReservationsRepository $reservationsRepository): Response
