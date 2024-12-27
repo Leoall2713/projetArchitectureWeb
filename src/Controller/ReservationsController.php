@@ -19,6 +19,7 @@ final class ReservationsController extends AbstractController
     {
         return $this->render('reservations/index.html.twig', [
             'reservations' => $reservationsRepository->findAll(),
+            $reservation = $reservationsRepository->findAll(),
         ]);
     }
 
@@ -166,5 +167,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Res
 
         return $this->redirectToRoute('app_reservations_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
     
 }
