@@ -1,31 +1,18 @@
 body {
-    background-color: rgb(163, 132, 236);
+    background-color: rgb(163, 132, 236);;
     text-align: center;
-}
-.navbar-color{
-    background-color: blue;
+    margin-top: 56px;
 }
 
-/*Maela 
-body {
-    background-color: rgb(244, 141, 204);
-    text-align: center;
-}*/
+.navbar {
+    background-color: #7070b0;
+}
 
-/*Clara 
-body {
-    background-color: rgb(163, 132, 236);
-    text-align: center;
-}*/
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+    ;
+}
 
-/*Thiama
-body {
-    background-color: #d7c8f9;
-    text-align: center;
-}*/
-
-/*Ju
-body {
-    background-color: #d7c8f9;
-    text-align: center;
-}*/
+.navbar-light .navbar-nav .nav-link:hover {
+    color: rgb(163, 132, 236);
+}

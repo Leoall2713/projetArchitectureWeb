@@ -49,10 +49,10 @@
         {{ form_start(form) }}
             <div class="form-row">
                 <div class="col">
-                    {{ form_row(form.promotion, {'value': form.promotion.vars.value ? form.promotion.vars.value.id : null}) }}
+                    {{ form_row(form.promotion) }}
                 </div>
                 <div class="col">
-                    {{ form_row(form.salle, {'value': form.salle.vars.value ? form.salle.vars.value.id : null}) }}
+                    {{ form_row(form.salle) }}
                 </div>
                 <div class="col">
                     <button type="submit" class="btn btn-primary">Filtrer</button>
