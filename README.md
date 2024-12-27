@@ -54,5 +54,14 @@ Pour la partie front nous avons choisi d'utiliser bootstrap
 ### B. Affichage des réservations
 Nous avons donc décidé d'afficher les réservations en détail, c'est a dire la date, l'heure de début, l'heure de fin, le nom et prénom de l'enseignant, le niveau de la promotion et l'intitulé de la formation, le nom de la matière et le nom de la salle.
 
+### Afficher selon la salle ou la promotion
+
+Nous avons ajouté un formulaire pour chosiir d'afficher les créneaux réservé pour les promotions ainsi que pour les salles.
+
+## 4. Problèmes rencontrés
+
+### A. Problème de date
+Pour certaines dates, les conditions ne marche pas. Malgrés de longues recherches nous n'avons pas réussi à identifier le problèmes.
+
 
 
