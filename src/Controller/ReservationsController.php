@@ -14,13 +14,43 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/reservations')]
 final class ReservationsController extends AbstractController
 {
-    #[Route(name: 'app_reservations_index', methods: ['GET'])]
-    public function index(ReservationsRepository $reservationsRepository): Response
-    {
-        return $this->render('reservations/index.html.twig', [
-            'reservations' => $reservationsRepository->findAll(),
-        ]);
+    #[Route(name: 'app_reservations_index', methods: ['GET', 'POST'])]
+public function index(Request $request, ReservationsRepository $reservationsRepository): Response
+{
+    // Créer un formulaire pour filtrer par salle et promotion
+    $form = $this->createFormBuilder()
+        ->add('promotion', EntityType::class, [
+            'class' => Promotions::class,
+            'choice_label' => 'intitule',
+            'placeholder' => 'Toutes les promotions',
+            'required' => false,
+        ])
+        ->add('salle', EntityType::class, [
+            'class' => Salles::class,
+            'choice_label' => 'nom',
+            'placeholder' => 'Toutes les salles',
+            'required' => false,
+        ])
+        ->getForm();
+
+    $form->handleRequest($request);
+
+    $promotion = null;
+    $salle = null;
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $promotion = $form->get('promotion')->getData();
+        $salle = $form->get('salle')->getData();
     }
+
+    // Filtrer les réservations en fonction de la promotion et de la salle
+    $reservations = $reservationsRepository->findByFilters($promotion, $salle);
+
+    return $this->render('reservations/index.html.twig', [
+        'reservations' => $reservations,
+        'form' => $form->createView(),
+    ]);
+}
 
     #[Route('/new', name: 'app_reservations_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager, ReservationsRepository $reservationsRepository): Response
